@@ -1,0 +1,237 @@
+[
+    {
+        "id": 1,
+        "Palabra": "Lancha",
+        "Word1": "Elocuente",
+        "Word2": "Elocuente",
+        "Pronunciacion": "/e-lo-cuén-te/",
+        "Tipo": [
+            "Adjetivo"
+        ],
+        "Formalidad": "Formal",
+        "Etimologia": "Del latín eloquens, -entis",
+        "Region": "",
+        "Descripciones": [
+            "Que se expresa de manera fluida y persuasiva",
+            "Que tiene elocuencia al hablar"
+        ],
+        "Ejemplo": "Su discurso fue tan elocuente que convenció a todos",
+        "Sinonimos": [
+            "persuasivo",
+            "expresivo",
+            "articulado"
+        ]
+    },
+    {
+        "id": 2,
+        "Palabra": "Mexicano, na",
+        "Word1": "Mexicano",
+        "Word2": "Mexicana",
+        "Pronunciacion": "/me-ji-cá-no/",
+        "Tipo": [
+            "Sustantivo",
+            "Adjetivo"
+        ],
+        "Formalidad": "Formal",
+        "Etimologia": "De México, del náhuatl Mēxihco",
+        "Region": "",
+        "Descripciones": [
+            "Perteneciente o relativo a México",
+            "Perteneciente o relativo a los mexicanos"
+        ],
+        "Ejemplo": "Él es un mexicano",
+        "Sinonimos": []
+    },
+    {
+        "id": 3,
+        "Palabra": "Computador, ra",
+        "Word1": "Computador",
+        "Word2": "Computadora",
+        "Pronunciacion": "/com-pu-ta-dór/",
+        "Tipo": [
+            "Sustantivo",
+            "Adjetivo"
+        ],
+        "Formalidad": "Formal",
+        "Etimologia": "Del latín computāre (calcular)",
+        "Region": "«computador» en Colombia; «computadora» en México y Latinoamérica; «ordenador» en España",
+        "Descripciones": [
+            "Que computa",
+            "Computadora electrónica",
+            "Calculadora"
+        ],
+        "Ejemplo": "El computador es de baja calidad",
+        "Sinonimos": [
+            "calculadora",
+            "ordenador",
+            "procesador"
+        ]
+    },
+    {
+        "id": 4,
+        "Palabra": "Extranjero, ra",
+        "Word1": "Extranjero",
+        "Word2": "Extranjera",
+        "Pronunciacion": "/ex-tran-jé-ro/",
+        "Tipo": [
+            "Sustantivo",
+            "Adjetivo"
+        ],
+        "Formalidad": "Formal",
+        "Etimologia": "Del latín vulgar extranĕus (extraño)",
+        "Region": "«gringo» es coloquial en Latinoamérica",
+        "Descripciones": [
+            "Natural de un país extranjero",
+            "Propio de una persona extranjera",
+            "Perteneciente o relativo a un país extranjero o al conjunto de ellos"
+        ],
+        "Ejemplo": "Hay personas extranjeras en otros países",
+        "Sinonimos": [
+            "foráneo",
+            "forastero",
+            "exótico",
+            "extraño",
+            "afuerino",
+            "gringo"
+        ]
+    },
+    {
+        "id": 5,
+        "Palabra": "Tigre, gresa",
+        "Word1": "Tigre",
+        "Word2": "Tigresa",
+        "Pronunciacion": "/tí-gre/",
+        "Tipo": [
+            "Sustantivo"
+        ],
+        "Formalidad": "Formal",
+        "Etimologia": "Del latín tigris, del griego τίγρις (tígris)",
+        "Region": "",
+        "Descripciones": [
+            "Mamífero carnívoro félido asiático, muy feroz y de gran tamaño, de pelaje blanco en el vientre, amarillento y con listas oscuras en el lomo y la cola, donde las tiene en forma de anillos",
+            "Persona furiosa, llena de ira",
+            "Mujer seductora y provocadora"
+        ],
+        "Ejemplo": "Es un tigre",
+        "Sinonimos": [
+            "rayado"
+        ]
+    },
+    {
+        "id": 6,
+        "Palabra": "Control",
+        "Word1": "Control",
+        "Word2": "Control",
+        "Pronunciacion": "/con-tról/",
+        "Tipo": [
+            "Sustantivo"
+        ],
+        "Formalidad": "Formal",
+        "Etimologia": "Del francés contrôle",
+        "Region": "",
+        "Descripciones": [
+            "Dominio, mando, preponderancia",
+            "Regulación, manual o automática, sobre un sistema",
+            "Mando o dispositivo de regulación"
+        ],
+        "Ejemplo": "Tú no tienes el control",
+        "Sinonimos": [
+            "dispositivo",
+            "mando",
+            "dominio",
+            "poder",
+            "autoridad",
+            "gobierno",
+            "dirección"
+        ]
+    },
+    {
+        "id": 7,
+        "Palabra": "Alcalde, desa",
+        "Word1": "Alcalde",
+        "Word2": "Alcaldesa",
+        "Pronunciacion": "/al-cál-de/",
+        "Tipo": [
+            "Sustantivo"
+        ],
+        "Formalidad": "Formal",
+        "Etimologia": "Del árabe hispánico alqáḍi (el juez)",
+        "Region": "«intendente» en Argentina; «presidente municipal» en México",
+        "Descripciones": [
+            "Autoridad municipal que preside un ayuntamiento y que ejecuta los acuerdos de esta corporación, sin perjuicio de sus potestades propias, y es además delegado del Gobierno en el orden administrativo",
+            "Juez ordinario que administraba justicia en un pueblo y presidía al mismo tiempo el consejo"
+        ],
+        "Ejemplo": "Ella es la alcaldesa",
+        "Sinonimos": [
+            "regidor",
+            "burgomaestre",
+            "intendente",
+            "corregidor",
+            "juez"
+        ]
+    },
+    {
+        "id": 8,
+        "Palabra": "Corrupto, ta",
+        "Word1": "Corrupto",
+        "Word2": "Corrupta",
+        "Pronunciacion": "/co-rrúp-to/",
+        "Tipo": [
+            "Adjetivo",
+            "Sustantivo"
+        ],
+        "Formalidad": "Formal",
+        "Etimologia": "Del latín corruptus, participio de corrumpĕre",
+        "Region": "",
+        "Descripciones": [
+            "Que se deja o ha dejado sobornar, pervertir o viciar",
+            "Dañado, perverso, torcido"
+        ],
+        "Ejemplo": "El corrupto come todos los días",
+        "Sinonimos": [
+            "corrompido"
+        ]
+    },
+    {
+        "id": 9,
+        "Palabra": "Manipulador, ra",
+        "Word1": "Manipulador",
+        "Word2": "Manipuladora",
+        "Pronunciacion": "/ma-ni-pu-la-dór/",
+        "Tipo": [
+            "Adjetivo",
+            "Sustantivo"
+        ],
+        "Formalidad": "Formal",
+        "Etimologia": "Del latín manipŭlus (manojo, puñado)",
+        "Region": "",
+        "Descripciones": [
+            "Que manipula",
+            "Aparato destinado a abrir y cerrar el circuito en las líneas telegráficas"
+        ],
+        "Ejemplo": "Ella manipula a todos a su voluntad",
+        "Sinonimos": [
+            "mangoneador",
+            "maniobrero"
+        ]
+    },
+    {
+        "id": 10,
+        "Palabra": "Maui",
+        "Word1": "Maui",
+        "Word2": "Maui",
+        "Pronunciacion": "mau-i",
+        "Tipo": [
+            "Verbo"
+        ],
+        "Formalidad": "Formal",
+        "Etimologia": "Del hawaiano Maku y de la pelicula Moana",
+        "Region": "en Grecia longa",
+        "Descripciones": [
+            "Rey de los obesos",
+            "Guerrero egolatra"
+        ],
+        "Ejemplo": "El es Maui",
+        "Sinonimos": []
+    }
+]

@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TermoTech - Admin Panel</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: #f5f6fa;
+            color: #2d3436;
+            min-height: 100vh;
+        }
+
+        /* --- Navbar --- */
+        nav {
+            background: white;
+            border-bottom: 3px solid #27AE60;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .nav-brand { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
+        .nav-brand .green { color: #27AE60; font-size: 1.8rem; }
+        .nav-brand .blue { color: #2F80ED; font-size: 1.8rem; }
+        .nav-badge {
+            background: #2F80ED;
+            color: white;
+            font-size: 0.75rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 1rem;
+            margin-left: 0.5rem;
+            font-weight: 600;
+        }
+        .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+        .nav-links a {
+            text-decoration: none;
+            color: #636e72;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: #2F80ED; }
+
+        /* --- Layout --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+
+        /* --- Stats bar --- */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.2rem;
+            text-align: center;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+            border-left: 4px solid #27AE60;
+        }
+        .stat-card:nth-child(2) { border-left-color: #2F80ED; }
+        .stat-card:nth-child(3) { border-left-color: #F7CC5E; }
+        .stat-card:nth-child(4) { border-left-color: purple; }
+        .stat-card:nth-child(5) { border-left-color: #e17055; }
+        .stat-number { font-size: 2rem; font-weight: 700; color: #2d3436; }
+        .stat-label { font-size: 0.85rem; color: #636e72; margin-top: 0.3rem; }
+
+        /* --- Toolbar --- */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .toolbar h2 { font-size: 1.5rem; color: #2d3436; }
+        .toolbar-actions { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
+        .search-box {
+            padding: 0.6rem 1rem;
+            border: 2px solid #dfe6e9;
+            border-radius: 0.5rem;
+            font-size: 0.95rem;
+            width: 250px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .search-box:focus { border-color: #2F80ED; }
+
+        /* --- Buttons --- */
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .btn-primary { background: #27AE60; color: white; }
+        .btn-primary:hover { background: #219a52; }
+        .btn-edit { background: #2F80ED; color: white; }
+        .btn-edit:hover { background: #2570d4; }
+        .btn-delete { background: #e74c3c; color: white; }
+        .btn-delete:hover { background: #c0392b; }
+        .btn-cancel { background: #dfe6e9; color: #2d3436; }
+        .btn-cancel:hover { background: #b2bec3; }
+        .btn-sm { padding: 0.4rem 0.8rem; font-size: 0.85rem; }
+
+        /* --- Table --- */
+        .table-wrapper {
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+            overflow-x: auto;
+        }
+        table { width: 100%; border-collapse: collapse; }
+        thead { background: #f8f9fa; }
+        th {
+            padding: 0.9rem 1rem;
+            text-align: left;
+            font-size: 0.85rem;
+            color: #636e72;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+        }
+        td {
+            padding: 0.85rem 1rem;
+            border-top: 1px solid #f1f2f6;
+            font-size: 0.95rem;
+            vertical-align: top;
+        }
+        tr:hover { background: #f8f9fa; }
+        .badge {
+            display: inline-block;
+            padding: 0.15rem 0.6rem;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin: 0.1rem;
+        }
+        .badge-green { background: #e8f5e9; color: #27AE60; }
+        .badge-purple { background: #f3e5f5; color: purple; }
+        .badge-blue { background: #e3f2fd; color: #2F80ED; }
+        .badge-yellow { background: #fff8e1; color: #f59f00; }
+        .word-main { font-weight: 700; color: #2F80ED; font-size: 1.05rem; }
+        .word-variants { font-size: 0.8rem; color: #636e72; }
+        .truncate { max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .desc-count { color: #636e72; font-size: 0.85rem; }
+        .actions-cell { white-space: nowrap; display: flex; gap: 0.4rem; }
+
+        /* --- Modal --- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 200;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal {
+            background: white;
+            border-radius: 1rem;
+            width: 100%;
+            max-width: 700px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            margin-top: 2rem;
+        }
+        .modal-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #f1f2f6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-header h3 { font-size: 1.3rem; color: #2d3436; }
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #636e72;
+            padding: 0.3rem;
+        }
+        .modal-close:hover { color: #e74c3c; }
+        .modal-body { padding: 2rem; }
+        .modal-footer {
+            padding: 1.2rem 2rem;
+            border-top: 1px solid #f1f2f6;
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+        }
+
+        /* --- Form --- */
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+        .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+        .form-group.full { grid-column: 1 / -1; }
+        .form-group label { font-size: 0.85rem; font-weight: 600; color: #636e72; }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 0.6rem 0.8rem;
+            border: 2px solid #dfe6e9;
+            border-radius: 0.5rem;
+            font-size: 0.95rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus { border-color: #2F80ED; }
+        .form-group textarea { resize: vertical; min-height: 70px; }
+        .form-hint { font-size: 0.78rem; color: #b2bec3; }
+
+        /* --- Dynamic list inputs --- */
+        .list-input { display: flex; flex-direction: column; gap: 0.5rem; }
+        .list-row { display: flex; gap: 0.5rem; align-items: center; }
+        .list-row input { flex: 1; }
+        .list-row .btn-remove {
+            background: none;
+            border: none;
+            color: #e74c3c;
+            cursor: pointer;
+            font-size: 1.3rem;
+            padding: 0 0.3rem;
+            line-height: 1;
+        }
+        .list-row .btn-remove:hover { color: #c0392b; }
+        .btn-add-row {
+            background: none;
+            border: 2px dashed #dfe6e9;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            color: #2F80ED;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .btn-add-row:hover { border-color: #2F80ED; background: #e3f2fd; }
+
+        /* --- Confirm Modal --- */
+        .confirm-body { padding: 2rem; text-align: center; }
+        .confirm-body p { font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .confirm-body .word-name { font-weight: 700; color: #2F80ED; font-size: 1.3rem; }
+        .confirm-body .warning { color: #e74c3c; font-size: 0.9rem; }
+
+        /* --- Toast --- */
+        .toast-container { position: fixed; top: 1rem; right: 1rem; z-index: 300; display: flex; flex-direction: column; gap: 0.5rem; }
+        .toast {
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.5rem;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            animation: slideIn 0.3s ease;
+        }
+        .toast-success { background: #27AE60; }
+        .toast-error { background: #e74c3c; }
+        .toast-info { background: #2F80ED; }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+        /* --- Empty state --- */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #636e72;
+        }
+        .empty-state p { font-size: 1.1rem; margin-bottom: 1rem; }
+
+        /* --- Detail Modal --- */
+        .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .detail-item { margin-bottom: 0.8rem; }
+        .detail-item.full { grid-column: 1 / -1; }
+        .detail-label { font-size: 0.8rem; text-transform: uppercase; color: #636e72; font-weight: 600; letter-spacing: 0.05em; margin-bottom: 0.2rem; }
+        .detail-value { font-size: 1rem; color: #2d3436; }
+        .detail-list { list-style: none; padding: 0; }
+        .detail-list li { padding: 0.3rem 0; border-bottom: 1px solid #f1f2f6; }
+        .detail-list li:last-child { border: none; }
+
+        /* --- Responsive --- */
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .form-grid { grid-template-columns: 1fr; }
+            .toolbar { flex-direction: column; align-items: stretch; }
+            .toolbar-actions { flex-direction: column; }
+            .search-box { width: 100%; }
+            .stats-bar { grid-template-columns: repeat(2, 1fr); }
+            nav { flex-direction: column; gap: 0.8rem; padding: 1rem; }
+            .detail-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav>
+        <div style="display: flex; align-items: center;">
+            <a href="/" class="nav-brand">
+                <span class="green">Termo</span><span class="blue">Tech</span>
+            </a>
+            <span class="nav-badge">ADMIN</span>
+        </div>
+        <div class="nav-links">
+            <a href="/">Diccionario</a>
+            <a href="/admin">Admin Panel</a>
+        </div>
+    </nav>
+
+    <!-- Toast container -->
+    <div class="toast-container" id="toasts"></div>
+
+    <div class="container">
+
+        <!-- Stats -->
+        <div class="stats-bar" id="stats-bar"></div>
+
+        <!-- Toolbar -->
+        <div class="toolbar">
+            <h2 id="table-title">Palabras</h2>
+            <div class="toolbar-actions">
+                <input type="text" class="search-box" id="filter-input" placeholder="Filtrar palabras...">
+                <button class="btn btn-primary" id="btn-new">+ Nueva Palabra</button>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Palabra</th>
+                        <th>Tipo</th>
+                        <th>Formalidad</th>
+                        <th>Descripciones</th>
+                        <th>Ejemplo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body"></tbody>
+            </table>
+            <div class="empty-state" id="empty-state" style="display:none;">
+                <p>No hay palabras en el diccionario.</p>
+                <button class="btn btn-primary" onclick="openCreateModal()">+ Agregar primera palabra</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create / Edit Modal -->
+    <div class="modal-overlay" id="form-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modal-title">Nueva Palabra</h3>
+                <button class="modal-close" onclick="closeFormModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="word-form" class="form-grid">
+                    <input type="hidden" id="f-id">
+
+                    <div class="form-group">
+                        <label for="f-palabra">Palabra (display)</label>
+                        <input type="text" id="f-palabra" placeholder="Ej: Elocuente" required>
+                        <span class="form-hint">Como aparece en el diccionario</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="f-pronunciacion">Pronunciacion</label>
+                        <input type="text" id="f-pronunciacion" placeholder="Ej: /e-lo-cuén-te/">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="f-word1">Word1 (busqueda masculino/singular)</label>
+                        <input type="text" id="f-word1" placeholder="Ej: Elocuente">
+                    </div>
+                    <div class="form-group">
+                        <label for="f-word2">Word2 (busqueda femenino/plural)</label>
+                        <input type="text" id="f-word2" placeholder="Ej: Elocuente">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="f-tipo">Tipo</label>
+                        <input type="text" id="f-tipo" placeholder="Ej: Sustantivo, Adjetivo">
+                        <span class="form-hint">Separar con comas si hay varios</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="f-formalidad">Formalidad</label>
+                        <select id="f-formalidad">
+                            <option value="Formal">Formal</option>
+                            <option value="Coloquial">Coloquial</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group full">
+                        <label for="f-etimologia">Etimologia</label>
+                        <input type="text" id="f-etimologia" placeholder="Ej: Del latin eloquens, -entis">
+                    </div>
+
+                    <div class="form-group full">
+                        <label for="f-region">Region</label>
+                        <input type="text" id="f-region" placeholder="Ej: «computador» en Colombia; «ordenador» en Espana">
+                    </div>
+
+                    <!-- Descripciones (dynamic) -->
+                    <div class="form-group full">
+                        <label>Descripciones</label>
+                        <div class="list-input" id="desc-list"></div>
+                        <button type="button" class="btn-add-row" onclick="addDescRow()">+ Agregar descripcion</button>
+                    </div>
+
+                    <div class="form-group full">
+                        <label for="f-ejemplo">Ejemplo</label>
+                        <input type="text" id="f-ejemplo" placeholder="Ej: Su discurso fue tan elocuente que convencio a todos">
+                    </div>
+
+                    <!-- Sinonimos (dynamic) -->
+                    <div class="form-group full">
+                        <label>Sinonimos</label>
+                        <div class="list-input" id="syn-list"></div>
+                        <button type="button" class="btn-add-row" onclick="addSynRow()">+ Agregar sinonimo</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-cancel" onclick="closeFormModal()">Cancelar</button>
+                <button class="btn btn-primary" id="btn-save" onclick="saveWord()">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirm Modal -->
+    <div class="modal-overlay" id="confirm-modal">
+        <div class="modal" style="max-width: 450px;">
+            <div class="modal-header">
+                <h3>Confirmar Eliminacion</h3>
+                <button class="modal-close" onclick="closeConfirmModal()">&times;</button>
+            </div>
+            <div class="confirm-body">
+                <p>Vas a eliminar la palabra:</p>
+                <p class="word-name" id="confirm-word"></p>
+                <p class="warning">Esta accion no se puede deshacer.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-cancel" onclick="closeConfirmModal()">Cancelar</button>
+                <button class="btn btn-delete" id="btn-confirm-delete" onclick="confirmDelete()">Eliminar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detail / Read Modal -->
+    <div class="modal-overlay" id="detail-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="detail-title">Detalle</h3>
+                <button class="modal-close" onclick="closeDetailModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="detail-body"></div>
+            <div class="modal-footer">
+                <button class="btn btn-cancel" onclick="closeDetailModal()">Cerrar</button>
+                <button class="btn btn-edit" id="btn-detail-edit">Editar</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+// --- State ---
+let words = [];
+let deleteTargetId = null;
+
+// --- API helpers ---
+async function api(method, path, body) {
+    const opts = { method, headers: { 'Content-Type': 'application/json' } };
+    if (body) opts.body = JSON.stringify(body);
+    const res = await fetch(path, opts);
+    return res.json();
+}
+
+// --- Toast ---
+function toast(message, type = 'success') {
+    const container = document.getElementById('toasts');
+    const el = document.createElement('div');
+    el.className = `toast toast-${type}`;
+    el.textContent = message;
+    container.appendChild(el);
+    setTimeout(() => el.remove(), 3000);
+}
+
+// --- Load data ---
+async function loadWords() {
+    words = await api('GET', '/api/words');
+    renderTable();
+    loadStats();
+}
+
+async function loadStats() {
+    const stats = await api('GET', '/api/stats');
+    const bar = document.getElementById('stats-bar');
+    const tiposList = Object.entries(stats.tipos).map(([k, v]) => `${k}: ${v}`).join(', ');
+    bar.innerHTML = `
+        <div class="stat-card">
+            <div class="stat-number">${stats.totalPalabras}</div>
+            <div class="stat-label">Total Palabras</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">${Object.keys(stats.tipos).length}</div>
+            <div class="stat-label">Tipos: ${tiposList}</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">${stats.promedioDescripciones}</div>
+            <div class="stat-label">Promedio Descripciones</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">${stats.promedioSinonimos}</div>
+            <div class="stat-label">Promedio Sinonimos</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">${stats.palabrasConRegion}</div>
+            <div class="stat-label">Con Info Regional</div>
+        </div>
+    `;
+}
+
+// --- Render table ---
+function renderTable(filter = '') {
+    const tbody = document.getElementById('table-body');
+    const empty = document.getElementById('empty-state');
+    const filtered = words.filter(w => {
+        if (!filter) return true;
+        const q = filter.toLowerCase();
+        return w.Palabra.toLowerCase().includes(q) ||
+               w.Word1.toLowerCase().includes(q) ||
+               w.Word2.toLowerCase().includes(q) ||
+               w.Tipo.join(' ').toLowerCase().includes(q);
+    });
+
+    document.getElementById('table-title').textContent = filter
+        ? `Palabras (${filtered.length} de ${words.length})`
+        : `Palabras (${words.length})`;
+
+    if (filtered.length === 0) {
+        tbody.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+    }
+    empty.style.display = 'none';
+
+    tbody.innerHTML = filtered.map(w => `
+        <tr>
+            <td>${w.id}</td>
+            <td>
+                <span class="word-main">${esc(w.Palabra)}</span>
+                <div class="word-variants">${esc(w.Word1)}${w.Word1 !== w.Word2 ? ' / ' + esc(w.Word2) : ''}</div>
+            </td>
+            <td>${w.Tipo.map(t => `<span class="badge badge-green">${esc(t)}</span>`).join(' ')}</td>
+            <td><span class="badge ${w.Formalidad === 'Formal' ? 'badge-purple' : 'badge-yellow'}">${esc(w.Formalidad)}</span></td>
+            <td><span class="desc-count">${w.Descripciones.length} def.</span></td>
+            <td><span class="truncate">${esc(w.Ejemplo)}</span></td>
+            <td>
+                <div class="actions-cell">
+                    <button class="btn btn-sm btn-edit" onclick="openDetailModal(${w.id})">Ver</button>
+                    <button class="btn btn-sm btn-primary" onclick="openEditModal(${w.id})">Editar</button>
+                    <button class="btn btn-sm btn-delete" onclick="openDeleteModal(${w.id})">Eliminar</button>
+                </div>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function esc(str) {
+    const d = document.createElement('div');
+    d.textContent = str;
+    return d.innerHTML;
+}
+
+// --- Filter ---
+document.getElementById('filter-input').addEventListener('input', function() {
+    renderTable(this.value);
+});
+
+// --- Create / Edit modal ---
+function openCreateModal() {
+    document.getElementById('modal-title').textContent = 'Nueva Palabra';
+    document.getElementById('f-id').value = '';
+    document.getElementById('f-palabra').value = '';
+    document.getElementById('f-word1').value = '';
+    document.getElementById('f-word2').value = '';
+    document.getElementById('f-pronunciacion').value = '';
+    document.getElementById('f-tipo').value = '';
+    document.getElementById('f-formalidad').value = 'Formal';
+    document.getElementById('f-etimologia').value = '';
+    document.getElementById('f-region').value = '';
+    document.getElementById('f-ejemplo').value = '';
+    document.getElementById('desc-list').innerHTML = '';
+    document.getElementById('syn-list').innerHTML = '';
+    addDescRow();
+    document.getElementById('form-modal').classList.add('active');
+}
+
+function openEditModal(id) {
+    const w = words.find(x => x.id === id);
+    if (!w) return;
+    document.getElementById('modal-title').textContent = 'Editar: ' + w.Palabra;
+    document.getElementById('f-id').value = w.id;
+    document.getElementById('f-palabra').value = w.Palabra;
+    document.getElementById('f-word1').value = w.Word1;
+    document.getElementById('f-word2').value = w.Word2;
+    document.getElementById('f-pronunciacion').value = w.Pronunciacion;
+    document.getElementById('f-tipo').value = w.Tipo.join(', ');
+    document.getElementById('f-formalidad').value = w.Formalidad;
+    document.getElementById('f-etimologia').value = w.Etimologia;
+    document.getElementById('f-region').value = w.Region;
+    document.getElementById('f-ejemplo').value = w.Ejemplo;
+
+    const descList = document.getElementById('desc-list');
+    descList.innerHTML = '';
+    w.Descripciones.forEach(d => addDescRow(d));
+    if (w.Descripciones.length === 0) addDescRow();
+
+    const synList = document.getElementById('syn-list');
+    synList.innerHTML = '';
+    w.Sinonimos.forEach(s => addSynRow(s));
+
+    document.getElementById('form-modal').classList.add('active');
+}
+
+function closeFormModal() {
+    document.getElementById('form-modal').classList.remove('active');
+}
+
+// --- Dynamic rows ---
+function addDescRow(value = '') {
+    const list = document.getElementById('desc-list');
+    const row = document.createElement('div');
+    row.className = 'list-row';
+    row.innerHTML = `<input type="text" value="${esc(value)}" placeholder="Definicion..."><button type="button" class="btn-remove" onclick="this.parentElement.remove()">&times;</button>`;
+    list.appendChild(row);
+}
+
+function addSynRow(value = '') {
+    const list = document.getElementById('syn-list');
+    const row = document.createElement('div');
+    row.className = 'list-row';
+    row.innerHTML = `<input type="text" value="${esc(value)}" placeholder="Sinonimo..."><button type="button" class="btn-remove" onclick="this.parentElement.remove()">&times;</button>`;
+    list.appendChild(row);
+}
+
+// --- Save ---
+async function saveWord() {
+    const id = document.getElementById('f-id').value;
+    const palabra = document.getElementById('f-palabra').value.trim();
+    if (!palabra) { toast('La palabra es obligatoria', 'error'); return; }
+
+    const descripciones = [...document.querySelectorAll('#desc-list .list-row input')]
+        .map(i => i.value.trim()).filter(Boolean);
+    const sinonimos = [...document.querySelectorAll('#syn-list .list-row input')]
+        .map(i => i.value.trim()).filter(Boolean);
+    const tipoRaw = document.getElementById('f-tipo').value;
+    const tipo = tipoRaw.split(',').map(t => t.trim()).filter(Boolean);
+
+    const body = {
+        Palabra: palabra,
+        Word1: document.getElementById('f-word1').value.trim() || palabra,
+        Word2: document.getElementById('f-word2').value.trim() || palabra,
+        Pronunciacion: document.getElementById('f-pronunciacion').value.trim(),
+        Tipo: tipo,
+        Formalidad: document.getElementById('f-formalidad').value,
+        Etimologia: document.getElementById('f-etimologia').value.trim(),
+        Region: document.getElementById('f-region').value.trim(),
+        Descripciones: descripciones,
+        Ejemplo: document.getElementById('f-ejemplo').value.trim(),
+        Sinonimos: sinonimos,
+    };
+
+    if (id) {
+        await api('PUT', `/api/words/${id}`, body);
+        toast('Palabra actualizada');
+    } else {
+        await api('POST', '/api/words', body);
+        toast('Palabra creada');
+    }
+
+    closeFormModal();
+    await loadWords();
+}
+
+// --- Delete ---
+function openDeleteModal(id) {
+    const w = words.find(x => x.id === id);
+    if (!w) return;
+    deleteTargetId = id;
+    document.getElementById('confirm-word').textContent = w.Palabra;
+    document.getElementById('confirm-modal').classList.add('active');
+}
+
+function closeConfirmModal() {
+    document.getElementById('confirm-modal').classList.remove('active');
+    deleteTargetId = null;
+}
+
+async function confirmDelete() {
+    if (!deleteTargetId) return;
+    await api('DELETE', `/api/words/${deleteTargetId}`);
+    toast('Palabra eliminada');
+    closeConfirmModal();
+    await loadWords();
+}
+
+// --- Detail / Read modal ---
+function openDetailModal(id) {
+    const w = words.find(x => x.id === id);
+    if (!w) return;
+    document.getElementById('detail-title').textContent = w.Palabra;
+    document.getElementById('btn-detail-edit').onclick = () => { closeDetailModal(); openEditModal(id); };
+
+    const body = document.getElementById('detail-body');
+    body.innerHTML = `
+        <div class="detail-grid">
+            <div class="detail-item">
+                <div class="detail-label">Palabra</div>
+                <div class="detail-value" style="color:#2F80ED; font-weight:700; font-size:1.3rem;">${esc(w.Palabra)}</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Pronunciacion</div>
+                <div class="detail-value">${esc(w.Pronunciacion)}</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Word1 (busqueda)</div>
+                <div class="detail-value">${esc(w.Word1)}</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Word2 (busqueda)</div>
+                <div class="detail-value">${esc(w.Word2)}</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Tipo</div>
+                <div class="detail-value">${w.Tipo.map(t => `<span class="badge badge-green">${esc(t)}</span>`).join(' ')}</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Formalidad</div>
+                <div class="detail-value"><span class="badge ${w.Formalidad === 'Formal' ? 'badge-purple' : 'badge-yellow'}">${esc(w.Formalidad)}</span></div>
+            </div>
+            <div class="detail-item full">
+                <div class="detail-label">Etimologia</div>
+                <div class="detail-value">${esc(w.Etimologia) || '<em style="color:#b2bec3;">Sin etimologia</em>'}</div>
+            </div>
+            <div class="detail-item full">
+                <div class="detail-label">Descripciones (${w.Descripciones.length})</div>
+                <ol class="detail-list" style="padding-left:1.2rem;">
+                    ${w.Descripciones.map(d => `<li>${esc(d)}</li>`).join('')}
+                </ol>
+            </div>
+            <div class="detail-item full">
+                <div class="detail-label">Ejemplo</div>
+                <div class="detail-value" style="font-style:italic;">"${esc(w.Ejemplo)}"</div>
+            </div>
+            <div class="detail-item full">
+                <div class="detail-label">Sinonimos (${w.Sinonimos.length})</div>
+                <div class="detail-value">${w.Sinonimos.length > 0 ? w.Sinonimos.map(s => `<span class="badge badge-blue">${esc(s)}</span>`).join(' ') : '<em style="color:#b2bec3;">Sin sinonimos</em>'}</div>
+            </div>
+            ${w.Region ? `
+            <div class="detail-item full">
+                <div class="detail-label">Region</div>
+                <div class="detail-value" style="font-style:italic;">${esc(w.Region)}</div>
+            </div>` : ''}
+        </div>
+    `;
+    document.getElementById('detail-modal').classList.add('active');
+}
+
+function closeDetailModal() {
+    document.getElementById('detail-modal').classList.remove('active');
+}
+
+// --- Close modals on overlay click ---
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+            overlay.classList.remove('active');
+            deleteTargetId = null;
+        }
+    });
+});
+
+// --- Close modals on Escape ---
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active'));
+        deleteTargetId = null;
+    }
+});
+
+// --- New button ---
+document.getElementById('btn-new').addEventListener('click', openCreateModal);
+
+// --- Init ---
+loadWords();
+</script>
+
+</body>
+</html>

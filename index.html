@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TermoTech</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav id="navbar" style="width: 100%; height: 10vh; display: flex; align-items: center; border-bottom: rgba(128, 128, 128, 0.235) solid 0.5rem; box-shadow: 5px 5px 12.5px rgba(0, 0, 0, 0.3); justify-content: center; gap: 4rem; padding: 0 4rem; box-sizing: border-box;">
+        <div style="display: flex; align-items: center; flex-shrink: 0;">
+            <h1 style="color: #27AE60; font-size: 2.3rem;" id="termo">Termo</h1>
+            <h1 style="color: #2F80ED; font-size: 2.3rem;" id="tech">Tech</h1>
+        </div>
+        <div id="search-bar" style="background-color: rgba(170, 170, 170, 0.235); border-radius: 30px; flex: 1; max-width: 30rem; height: 5vh; display: flex; align-items: center;">
+            <img src="img/search.webp" style="width: 1.5rem; margin-left: 2rem;" alt="" id="search">
+            <input type="search" name="" placeholder="Escribe tu palabra..." style="margin-left: 1.3rem; border: none; height: 2vh; flex: 1; width: 0; background-color: rgba(128, 128, 128, 0.0); font-size: 1.3rem; outline: none; margin-right: 1.5rem;" id="search-input">
+        </div>
+        <div style="display: flex; align-items: center; gap: 2rem; flex-shrink: 0;">
+            <img style="width: 4.7rem;" id="sun" src="img/sun.webp" alt="">
+            <img style="width: 2.5rem;" src="img/gear.webp" alt="">
+        </div>
+    </nav>
+        <div style="display: flex; justify-content: center; align-items: center; min-height: 80vh; padding: 2rem 0;">
+                    <div style="border: gray solid 0.1rem; width: 30%; min-width: 22rem; max-width: 40rem; box-shadow: 5px 5px 12.5px rgba(0, 0, 0, 0.3); border-radius: 1rem; overflow: hidden;">
+            <div style="width: 100%; display: flex; flex-direction: column; align-items: center; padding: 2rem 0; border-radius: 1rem;" id="card">
+                <h1 style="color: #2F80ED;  font-size: 3rem;" id="word">
+                    Elocuente
+                </h1>
+                <p style="color: gray; margin-top: 1rem; font-size: 1.5rem;" id="pronunciation" >
+                    /e-lo-cuén-te/
+                </p>
+                <p style="color: gray; margin-top: 0.5rem; font-size: 1rem; font-style: italic;" id="etymology" class="content">Del latín eloquens, -entis</p>
+                <div style="display: flex; margin-top: 1rem; gap: 1rem; justify-content: center;">
+                    <div style="background-color: #27AE60; border-radius: 1rem; padding: 0 1rem; display: flex; justify-content: center; align-items: center; height: 2rem; font-size: 1.1rem; white-space: nowrap;" id="green">
+                        <p id="type" style="color: white;">Adjetivo</p>
+                    </div>
+                    <div style="background-color: purple; border-radius: 1rem; width: 7rem; display: flex; justify-content: center; align-items: center; height: 2rem; font-size: 1.1rem;" id="purple">
+                        <p id="formality" style="color: white;">Formal</p>
+                    </div>
+                </div>
+                <div style="border-top: gray solid 0.1rem; margin-top: 1rem; width: 100%;"></div>
+                <div id="descriptions" style="display: flex; align-items: center; flex-direction: column; width: 100%; padding: 0 1.5rem; box-sizing: border-box;">
+                    <div style="display: flex;  margin-top: 1.4rem; font-size: 1.3rem;" class="number">
+                            <p style="color: #2F80ED; font-weight: bolder;">
+                                1. 
+                            </p>
+                            <p class="content">Que se expresa de manera fluida y persuasiva</p>
+                    </div>
+                    <div style="display: flex;  margin-top: 2.4rem; font-size: 1.3rem;" class="number">
+                            <p style="color: #2F80ED; font-weight: bolder;">
+                                2. 
+                            </p>
+                            <p class="content">Que tiene elocuencia en el hablar</p>
+                    </div>
+                </div>
+                            <div style="border-top: gray solid 0.1rem; margin-top: 0.9rem; width: 100%;"></div>
+                <div style="margin-top: 1rem; background-color: #FCFCFD; width: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column; box-sizing: border-box; position: relative;" id="background">
+                                        <div style="border-top: gray solid 0.1rem; margin-top: 0.5rem; width: 100%; z-index: 0;"></div>
+                    <div style="background-color: #F7CC5E; border-radius: 1rem; width: 6rem; height: 1.8rem; display: flex; align-items: center; justify-content: center; z-index: 1; position: absolute; margin-top: -3rem;" id="example-container">
+                        <p style="color: black; z-index: 1; font-size: 1.2rem;" class="content">Ejemplo</p>
+                    </div>
+                    <p style="margin-top: 2rem; font-size: 1.2rem; text-align: center; padding: 0 1rem;" class="content" id="example"> Su discurso fue tan elocuente que convenció a todos </p>
+                </div>
+                            <div style="border-top: gray solid 0.1rem; margin-top: 1rem; width: 100%;"></div>
+
+                <div id="synonyms-section" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+                    <p style="margin-top: 1rem; font-size: 1.3rem;" class="content">Sinónimos:</p>
+                    <div style="border-top: gray solid 0.1rem; margin-top: 0.5rem; width: 100%;">
+                    </div>
+                    <div style="background-color: #EEF2FA; max-width: 90%; padding: 0.5rem 1.5rem; border-radius: 0.5rem; display: flex; justify-content: center; align-items: center; margin-top: 0.5rem; font-size: 1.3rem; text-align: center;" id="synonym">
+                        <p class="content" id="synonyms"> persuasivo, expresivo, articulado</p>
+                    </div>
+                </div>
+                <div id="region-container" style="margin-top: 0.8rem; display: none;">
+                    <p style="font-size: 1.1rem; color: gray; font-style: italic; text-align: center; padding: 0 1rem;" class="content" id="region"></p>
+                </div>
+            </div>
+        </div> 
+        </div>
+    <script src="main.js"></script>
+</body>
+</html>
