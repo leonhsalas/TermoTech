@@ -133,7 +133,6 @@
             color: #636e72;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            white-space: nowrap;
         }
         td {
             padding: 0.85rem 1rem;
@@ -156,9 +155,11 @@
         .badge-yellow { background: #fff8e1; color: #f59f00; }
         .word-main { font-weight: 700; color: #2F80ED; font-size: 1.05rem; }
         .word-variants { font-size: 0.8rem; color: #636e72; }
-        .truncate { max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .truncate { max-width: 200px; overflow: hidden; text-overflow: ellipsis; }
         .desc-count { color: #636e72; font-size: 0.85rem; }
-        .actions-cell { white-space: nowrap; display: flex; gap: 0.4rem; }
+        .actions-cell { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+        .col-id, .col-ejemplo { }
+        .col-desc { }
 
         /* --- Modal --- */
         .modal-overlay {
@@ -298,6 +299,17 @@
         .detail-list li:last-child { border: none; }
 
         /* --- Responsive --- */
+        @media (max-width: 900px) {
+            .col-id, .col-ejemplo { display: none; }
+        }
+        @media (max-width: 600px) {
+            .col-desc { display: none; }
+            .table-wrapper { overflow-x: visible; }
+            td, th { padding: 0.6rem 0.5rem; font-size: 0.85rem; }
+            .word-main { font-size: 0.95rem; }
+            .actions-cell { flex-direction: column; }
+            .btn-sm { width: 100%; justify-content: center; }
+        }
         @media (max-width: 768px) {
             .container { padding: 1rem; }
             .form-grid { grid-template-columns: 1fr; }
@@ -348,12 +360,12 @@
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th class="col-id">ID</th>
                         <th>Palabra</th>
                         <th>Tipo</th>
                         <th>Formalidad</th>
-                        <th>Descripciones</th>
-                        <th>Ejemplo</th>
+                        <th class="col-desc">Descripciones</th>
+                        <th class="col-ejemplo">Ejemplo</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -564,15 +576,15 @@ function renderTable(filter = '') {
 
     tbody.innerHTML = filtered.map(w => `
         <tr>
-            <td>${w.id}</td>
+            <td class="col-id">${w.id}</td>
             <td>
                 <span class="word-main">${esc(w.Palabra)}</span>
                 <div class="word-variants">${esc(w.Word1)}${w.Word1 !== w.Word2 ? ' / ' + esc(w.Word2) : ''}</div>
             </td>
             <td>${w.Tipo.map(t => `<span class="badge badge-green">${esc(t)}</span>`).join(' ')}</td>
             <td><span class="badge ${w.Formalidad === 'Formal' ? 'badge-purple' : 'badge-yellow'}">${esc(w.Formalidad)}</span></td>
-            <td><span class="desc-count">${w.Descripciones.length} def.</span></td>
-            <td><span class="truncate">${esc(w.Ejemplo)}</span></td>
+            <td class="col-desc"><span class="desc-count">${w.Descripciones.length} def.</span></td>
+            <td class="col-ejemplo"><span class="truncate">${esc(w.Ejemplo)}</span></td>
             <td>
                 <div class="actions-cell">
                     <button class="btn btn-sm btn-edit" onclick="openDetailModal(${w.id})">Ver</button>
