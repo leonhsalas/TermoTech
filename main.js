@@ -25,7 +25,6 @@ const synonymsSection = document.getElementById("synonyms-section");
 const regionContainer = document.getElementById("region-container");
 const region = document.getElementById("region");
 let numbers = document.getElementsByClassName("number");
-let searched = false;
 let cachedData = null;
 
 async function obtenerDatos() {
@@ -106,54 +105,69 @@ function createDescription(index, descText) {
     descriptions.appendChild(description);
 }
 
+function displayWord(data, query) {
+    let found = false;
+    for (let i = 0; i < data.length; i++) {
+        const matchPalabra = data[i].Palabra.toLowerCase() === query;
+        const matchWord1 = data[i].Word1.toLowerCase() === query;
+        const matchWord2 = data[i].Word2.toLowerCase() === query;
+        if (matchPalabra || matchWord1 || matchWord2) {
+            word.textContent = data[i].Palabra;
+            pronunciation.textContent = data[i].Pronunciacion;
+            example.textContent = data[i].Ejemplo;
+            type.textContent = data[i].Tipo.join(", ");
+            if (data[i].Sinonimos.length > 0) {
+                synonyms.innerText = data[i].Sinonimos.join(", ");
+                synonymsSection.style.display = "flex";
+            } else {
+                synonymsSection.style.display = "none";
+            }
+            etymology.textContent = data[i].Etimologia;
+            if (data[i].Region) {
+                region.textContent = data[i].Region;
+                regionContainer.style.display = "block";
+            } else {
+                regionContainer.style.display = "none";
+            }
+            while (numbers.length > 0) {
+                numbers[0].remove();
+            }
+            data[i].Descripciones.forEach((desc, idx) => {
+                createDescription(idx, desc);
+            });
+            const url = new URL(window.location);
+            url.searchParams.set('word', data[i].Palabra.toLowerCase());
+            history.pushState(null, '', url);
+            found = true;
+            break;
+        }
+    }
+    if (!found) {
+        word.innerText = "La Palabra";
+        example.innerText = "";
+        synonyms.innerText = "";
+        type.innerText = "Frase";
+        pronunciation.innerText = "No Existe";
+        etymology.textContent = "";
+        regionContainer.style.display = "none";
+    }
+}
+
 input.addEventListener('keypress', function(event) {
     if (event.key === "Enter") {
         obtenerDatos().then(data => {
-            const query = input.value.toLowerCase();
-            for (let i = 0; i < data.length; i++) {
-                const matchPalabra = data[i].Palabra.toLowerCase() === query;
-                const matchWord1 = data[i].Word1.toLowerCase() === query;
-                const matchWord2 = data[i].Word2.toLowerCase() === query;
-                if (matchPalabra || matchWord1 || matchWord2) {
-                    word.textContent = data[i].Palabra;
-                    pronunciation.textContent = data[i].Pronunciacion;
-                    example.textContent = data[i].Ejemplo;
-                    type.textContent = data[i].Tipo.join(", ");
-                    if (data[i].Sinonimos.length > 0) {
-                        synonyms.innerText = data[i].Sinonimos.join(", ");
-                        synonymsSection.style.display = "flex";
-                    } else {
-                        synonymsSection.style.display = "none";
-                    }
-                    etymology.textContent = data[i].Etimologia;
-                    if (data[i].Region) {
-                        region.textContent = data[i].Region;
-                        regionContainer.style.display = "block";
-                    } else {
-                        regionContainer.style.display = "none";
-                    }
-                    while (numbers.length > 0) {
-                        numbers[0].remove();
-                    }
-                    data[i].Descripciones.forEach((desc, idx) => {
-                        createDescription(idx, desc);
-                    });
-                    searched = true;
-                    break;
-                }
-            }
-            if (searched === false) {
-                word.innerText = "La Palabra";
-                example.innerText = "";
-                synonyms.innerText = "";
-                type.innerText = "Frase";
-                pronunciation.innerText = "No Existe";
-                etymology.textContent = "";
-                regionContainer.style.display = "none";
-            }
-            searched = false;
+            displayWord(data, input.value.toLowerCase());
         });
     }
 })
+
+// Load word from URL on page load
+const params = new URLSearchParams(window.location.search);
+const wordParam = params.get('word');
+if (wordParam) {
+    obtenerDatos().then(data => {
+        displayWord(data, wordParam.toLowerCase());
+    });
+}
 
 });
