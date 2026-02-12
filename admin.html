@@ -158,7 +158,8 @@
         .word-variants { font-size: 0.8rem; color: #636e72; }
         .truncate { max-width: 200px; overflow: hidden; text-overflow: ellipsis; }
         .desc-count { color: #636e72; font-size: 0.85rem; }
-        .actions-cell { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+        .actions-cell { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; }
+        .actions-cell .btn-delete { grid-column: 1 / -1; }
         .col-id, .col-ejemplo { }
         .col-desc { }
 
