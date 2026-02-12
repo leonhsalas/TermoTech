@@ -116,6 +116,7 @@
         .btn-cancel { background: #dfe6e9; color: #2d3436; }
         .btn-cancel:hover { background: #b2bec3; }
         .btn-sm { padding: 0.4rem 0.8rem; font-size: 0.85rem; }
+        .btn-icon { padding: 0.4rem; font-size: 1.1rem; width: 2.2rem; height: 2.2rem; justify-content: center; }
 
         /* --- Table --- */
         .table-wrapper {
@@ -307,8 +308,7 @@
             .table-wrapper { overflow-x: visible; }
             td, th { padding: 0.6rem 0.5rem; font-size: 0.85rem; }
             .word-main { font-size: 0.95rem; }
-            .actions-cell { flex-direction: column; }
-            .btn-sm { width: 100%; justify-content: center; }
+            .actions-cell { flex-direction: row; }
         }
         @media (max-width: 768px) {
             .container { padding: 1rem; }
@@ -587,9 +587,9 @@ function renderTable(filter = '') {
             <td class="col-ejemplo"><span class="truncate">${esc(w.Ejemplo)}</span></td>
             <td>
                 <div class="actions-cell">
-                    <button class="btn btn-sm btn-edit" onclick="openDetailModal(${w.id})">Ver</button>
-                    <button class="btn btn-sm btn-primary" onclick="openEditModal(${w.id})">Editar</button>
-                    <button class="btn btn-sm btn-delete" onclick="openDeleteModal(${w.id})">Eliminar</button>
+                    <button class="btn btn-icon btn-edit" title="Ver" onclick="openDetailModal(${w.id})">&#128065;</button>
+                    <button class="btn btn-icon btn-primary" title="Editar" onclick="openEditModal(${w.id})">&#9998;</button>
+                    <button class="btn btn-icon btn-delete" title="Eliminar" onclick="openDeleteModal(${w.id})">&#10006;</button>
                 </div>
             </td>
         </tr>
